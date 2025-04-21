@@ -84,7 +84,9 @@ def append_transcript_comments(merged_dict):
 
 
 
-# Merges trancripts and comments into a dictionary, video_id being keys
+# Fetches and merges trancripts and comments into a dictionary, video_id being 
+# keys. It calls both fetch_transcript() and pull_comments() without 
+# seperate calls for each
 def merge_transcript_comments(video_ids):
     if isinstance(video_ids, list):
         pass

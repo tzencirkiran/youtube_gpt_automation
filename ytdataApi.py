@@ -2,8 +2,14 @@ from googleapiclient.discovery import build
 import pandas as pd
 import re
 import json
+import os
+from dotenv import load_dotenv
 
-yt_api_key = "AIzaSyCi3ij-NZxMgDPaSndyPjo7iZULJBI6D5U"
+# reads env variables and opens access from os.getenv
+load_dotenv()
+
+# yt api : AIzaSyCi3ij-NZxMgDPaSndyPjo7iZULJBI6D5U
+yt_api_key = os.getenv("YT_API_KEY")
 
 # Creating a youtube object
 youtube = build("youtube", "v3", developerKey=yt_api_key)

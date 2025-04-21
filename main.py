@@ -26,6 +26,7 @@ FileHandler.save_transcript_comments(tc_comment_dict)
 
 # Add yt_api_key in ydDataApi to a seperate a seperate txt
 class UserInput:
+    # Fetches and saves transcript and comments to trancript_comments.json
     def trancript_comments_to_json(vid_pl_id):
         transcript_comments_dict = {}
         # Decide whether input is playlist or not, then get their ids
@@ -41,11 +42,10 @@ class UserInput:
             # Save dictionary to json file
             FileHandler.save_transcript_comments(transcript_comments_dict)
 
-        # Save them to transcript_comments.json file
-        return None
-    
+    # Reads and returns transcript_comments.json
     def read_transcript_comments():
-        return None
+        transcript_comments = FileHandler.read_transcript_comments()
+        return transcript_comments
     
     def get_youtube_api_key():
         return None

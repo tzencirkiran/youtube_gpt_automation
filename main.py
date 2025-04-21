@@ -3,6 +3,8 @@ from fileHandler import FileHandler, VideoIdHandler
 from ytTranscriptApi import fetch_transcript_comments
 import json
 
+while True:
+    break
 
 
 # I need to merge some methods for less complexity
@@ -23,3 +25,28 @@ FileHandler.save_transcript_comments(tc_comment_dict)
 # I need to put methods of different files to classes for increased modularity
 
 # Add yt_api_key in ydDataApi to a seperate a seperate txt
+class UserInput:
+    def trancript_comments_to_json(vid_pl_id):
+        transcript_comments_dict = {}
+        # Decide whether input is playlist or not, then get their ids
+        if vid_pl_id.str.startswith("PL"):
+            # Storing ids in video_ids, store trancript_comments in 
+            # transcript_comments_dict and save it to json file
+            video_ids = YoutubeDataAPI.fetch_video_ids_pl(vid_pl_id)
+            transcript_comments_dict = fetch_transcript_comments(video_ids)
+            FileHandler.save_transcript_comments(transcript_comments_dict)
+        else:
+            # Fetch video's trancript and comments to to dictionary
+            transcript_comments_dict = fetch_transcript_comments(vid_pl_id)
+            # Save dictionary to json file
+            FileHandler.save_transcript_comments(transcript_comments_dict)
+
+        # Save them to transcript_comments.json file
+        return None
+    
+    def read_transcript_comments():
+        return None
+    
+    def get_youtube_api_key():
+        return None
+    

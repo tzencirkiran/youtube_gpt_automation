@@ -7,7 +7,7 @@ import json
 
 # I need to merge some methods for less complexity
 print("1")
-video_ids = YoutubeDataAPI.fetch_video_ids_pl("PL-osiE80TeTt2d9bfVyTiXJA-UTHn6WwU")
+video_ids = YoutubeDataAPI.fetch_video_ids_pl("PL7BImOT2srcFJlt4kdzJLttcd9wRCdnF9")
 
 print("2")
 VideoIdHandler.save_video_ids(video_ids=video_ids)

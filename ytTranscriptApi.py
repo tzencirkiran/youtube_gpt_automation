@@ -16,12 +16,8 @@ def fetch_transcript(video_ids):
         raise TypeError("video_ids should be list or string")
         
     id_transcript_dict = {}
-    for video_id in video_ids:
-        try:    
-            fetched_transcript = ytt_api.fetch(video_id, languages=["en", "tr"])
-        except:
-            print(f"Something went wrong when the program was fetching \
-                  {YoutubeDataAPI.fetch_video_titles(video_id)}")
+    for video_id in video_ids:    
+        fetched_transcript = ytt_api.fetch(video_id, languages=["en", "tr"])
 
         transcript_text_list = []
         for snippet in fetched_transcript:

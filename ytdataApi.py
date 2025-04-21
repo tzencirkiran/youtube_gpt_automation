@@ -1,24 +1,21 @@
 from googleapiclient.discovery import build
 import pandas as pd
-import re
-import json
 import os
 from dotenv import load_dotenv
 
-# reads env variables and opens access from os.getenv
-load_dotenv()
-
-# yt api : AIzaSyCi3ij-NZxMgDPaSndyPjo7iZULJBI6D5U
-yt_api_key = os.getenv("YT_API_KEY")
-
-# Creating a youtube object
-youtube = build("youtube", "v3", developerKey=yt_api_key)
-
 class YoutubeDataAPI:
+
+    def __init__(self):
+        # reads env variables and opens access from os.getenv
+        load_dotenv()
+        self.yt_api_key = os.getenv("YT_API_KEY")
+        # Creating a youtube object
+        self.youtube = build("youtube", "v3", developerKey=self.yt_api_key)
+
     ## A search method that returns video ids
-    def search(keyword):
+    def search(self, keyword):
         # Request for search from youtube data api
-        request = youtube.search().list(
+        request = self.youtube.search().list(
             q=keyword,
             maxResults=10, 
             part="snippet",
@@ -42,7 +39,7 @@ class YoutubeDataAPI:
 
 
     ## A method that pulls comments from given video ids
-    def pull_comments(video_ids):
+    def pull_comments(self, video_ids):
         # Checks whether video_ids list or string, if not raises error
         if isinstance(video_ids, list):
             pass
@@ -57,7 +54,7 @@ class YoutubeDataAPI:
             pageToken = None
             comment_list = []
             while True:
-                request = youtube.commentThreads().list(
+                request = self.youtube.commentThreads().list(
                     videoId=video_id,
                     part="snippet",
                     maxResults=100,
@@ -90,7 +87,7 @@ class YoutubeDataAPI:
         return id_comment_dict
 
     # Returns video titles according to their video ids
-    def fetch_video_titles(video_ids):
+    def fetch_video_titles(self, video_ids):
         # Checks whether video_ids list or string, if not raises error
         if isinstance(video_ids, list):
             pass
@@ -99,7 +96,7 @@ class YoutubeDataAPI:
         elif not isinstance(video_ids, (list, str)):
             raise TypeError("video_ids should be list or string")
         
-        request = youtube.videos().list(
+        request = self.youtube.videos().list(
                 part="snippet",
                 id=video_ids
             )
@@ -112,12 +109,12 @@ class YoutubeDataAPI:
         return video_titles
 
     # Fetch video ids inside a playlist, returns video_ids as list
-    def fetch_video_ids_pl(pl_id):
+    def fetch_video_ids_pl(self, pl_id):
         nextPageToken = None
         video_ids = []
         # Until each page's videos' ids gathered, this loop continues
         while True:
-            request = youtube.playlistItems().list(
+            request = self.youtube.playlistItems().list(
                 part="id,contentDetails",
                 playlistId=pl_id,
                 maxResults=50,

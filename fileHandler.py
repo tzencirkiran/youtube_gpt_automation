@@ -85,7 +85,8 @@ class FileHandler:
 
     # Creates a .env file, if there isn't saves api_key to the file
     def setup_env(user_input):
-        env_path = ".env"
+        base_dir = os.path.dirname(__file__)
+        env_path = os.path.join(base_dir, ".env")
 
         # Opens file in write mode and writes api
         with open(env_path, "w", encoding="utf-8") as file:

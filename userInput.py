@@ -5,12 +5,13 @@ from fileHandler import FileHandler
 class UserInput:
     # Fetches and saves transcript and comments to trancript_comments.json
     def trancript_comments_to_json(vid_pl_id):
+        yt_data_api = YoutubeDataAPI()
         transcript_comments_dict = {}
         # Decide whether input is playlist or not, then get their ids
-        if vid_pl_id.str.startswith("PL"):
+        if vid_pl_id.startswith("PL"):
             # Storing ids in video_ids, store trancript_comments in 
             # transcript_comments_dict and save it to json file
-            video_ids = YoutubeDataAPI.fetch_video_ids_pl(vid_pl_id)
+            video_ids = yt_data_api.fetch_video_ids_pl(vid_pl_id)
             transcript_comments_dict = fetch_transcript_comments(video_ids)
             FileHandler.save_transcript_comments(transcript_comments_dict)
         else:

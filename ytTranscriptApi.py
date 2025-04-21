@@ -3,6 +3,7 @@ from ytdataApi import YoutubeDataAPI
 
 # Create an object for YouTubeTranscriptApi
 ytt_api = YouTubeTranscriptApi()
+yt_data_api = YoutubeDataAPI()
 
 ## A method for fetching transcript of given youtube videos ids
 def fetch_transcript(video_ids):
@@ -46,10 +47,10 @@ def fetch_transcript_comments(video_ids):
         merged_dict[video_id] = {
             # fetching videoTitle is insufficient, 
             # bc the method can gather multiple ids at a time
-            "videoTitle": YoutubeDataAPI.fetch_video_titles(video_id)[0],  # list of one title
+            "videoTitle": yt_data_api.fetch_video_titles(video_id)[0],  # list of one title
                 "data": {
                     "transcript": fetch_transcript(video_id)[video_id],
-                    "comments": YoutubeDataAPI.pull_comments(video_id)[video_id]
+                    "comments": yt_data_api.pull_comments(video_id)[video_id]
                 }
         }
   

@@ -3,28 +3,6 @@ from fileHandler import FileHandler, VideoIdHandler
 from ytTranscriptApi import fetch_transcript_comments
 import json
 
-while True:
-    break
-
-
-# I need to merge some methods for less complexity
-print("1")
-video_ids = YoutubeDataAPI.fetch_video_ids_pl("PL7BImOT2srcFJlt4kdzJLttcd9wRCdnF9")
-
-print("2")
-VideoIdHandler.save_video_ids(video_ids=video_ids)
-
-print("3")
-tc_comment_dict = fetch_transcript_comments(VideoIdHandler.read_video_ids())
-
-print("4")
-
-print("5")
-FileHandler.save_transcript_comments(tc_comment_dict)
-
-# I need to put methods of different files to classes for increased modularity
-
-# Add yt_api_key in ydDataApi to a seperate a seperate txt
 class UserInput:
     # Fetches and saves transcript and comments to trancript_comments.json
     def trancript_comments_to_json(vid_pl_id):
@@ -48,6 +26,26 @@ class UserInput:
         return transcript_comments
     
     # Takes user input of api_key and writes it to .env (YT_API_KEY)
-    def get_youtube_api_key(user_api_key):
+    def set_youtube_api_key(user_api_key):
         FileHandler.setup_env(user_api_key)
     
+
+while True:
+    # Gets user input for their command
+    user_input = input("Command: ").strip()
+
+    # cmd: break
+    if user_input == "break":
+        break
+    # cmd: fetch youtube data
+    elif user_input.startswith("fetch youtube data"):
+        vid_pl_id = user_input.split(" ")[-1]
+        UserInput.trancript_comments_to_json(vid_pl_id)
+    # cmd: read youtube data
+    elif user_input == "read youtube data":
+        UserInput.read_transcript_comments()
+    # cmd: set youtube api key
+    elif user_input == "set youtube api key":
+        api_key = user_input.split(" ")[-1]
+        UserInput.set_youtube_api_key(api_key)
+

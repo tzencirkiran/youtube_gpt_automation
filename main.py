@@ -5,4 +5,10 @@ from fileHandler import merge_transcript_comments, save_transcript_comments, \
 import pandas as pd
 import json
 
+# For Youtube Data API, I need a method to gather video ids from url links
 
+
+# I need to merge some methods for less complexity
+
+
+# I need to put methods of different files to classes for increased modularity

@@ -1,5 +1,4 @@
 from googleapiclient.discovery import build
-from ytdataApi import search, pull_comments, fetch_video_titles
 from ytTranscriptApi import fetch_transcript
 import pandas as pd
 import json
@@ -45,69 +44,47 @@ class VideoIdHandler:
         return video_ids
 
 
-# Saves transcript_comments to cwd
-def save_transcript_comments(merged_dict):
-    base_dir = os.path.dirname(__file__)
-    print(base_dir)
-    save_path = os.path.join(base_dir, "transcript_comments.json")
 
-    with open(save_path, "w", encoding="utf-8") as file:
-        json.dump(merged_dict, file, ensure_ascii=False, indent=4)
+class FileHandler:
+    # Saves transcript_comments to cwd
+    def save_transcript_comments(merged_dict):
+        base_dir = os.path.dirname(__file__)
+        print(base_dir)
+        save_path = os.path.join(base_dir, "transcript_comments.json")
 
-# Reads file transcript_comments and returns json object
-def read_transcript_comments():
-    base_dir = os.path.dirname(__file__)
-    read_path = os.path.join(base_dir, "transcript_comments.json")
+        with open(save_path, "w", encoding="utf-8") as file:
+            json.dump(merged_dict, file, ensure_ascii=False, indent=4)
 
-    with open(read_path, "r", encoding="utf-8") as file:
-        trancript_comments = json.load(file)
-    return trancript_comments
+    # Reads file transcript_comments and returns dictionary
+    def read_transcript_comments():
+        base_dir = os.path.dirname(__file__)
+        read_path = os.path.join(base_dir, "transcript_comments.json")
 
-# Appends merged_dict to file rather than overwriting
-def append_transcript_comments(merged_dict):
-    base_dir = os.path.dirname(__file__)
-    save_path = os.path.join(base_dir, "transcript_comments.json")
+        with open(read_path, "r", encoding="utf-8") as file:
+            trancript_comments = json.load(file)
+        return trancript_comments
 
-    # Load existing content if the file exists
-    if os.path.exists(save_path):
-        with open(save_path, "r", encoding="utf-8") as file:
-            existing_data = json.load(file)
-    else:
-        existing_data = {}
+    # Appends merged_dict to file rather than overwriting
+    def append_transcript_comments(merged_dict):
+        base_dir = os.path.dirname(__file__)
+        save_path = os.path.join(base_dir, "transcript_comments.json")
 
-    # Update with new data (this preserves the existing ones)
-    existing_data.update(merged_dict)
+        # Load existing content if the file exists
+        if os.path.exists(save_path):
+            with open(save_path, "r", encoding="utf-8") as file:
+                existing_data = json.load(file)
+        else:
+            existing_data = {}
 
-    # Save the updated content back to the file
-    with open(save_path, "w", encoding="utf-8") as file:
-        json.dump(existing_data, file, ensure_ascii=False, indent=4)
+        # Update with new data (this preserves the existing ones)
+        existing_data.update(merged_dict)
+
+        # Save the updated content back to the file
+        with open(save_path, "w", encoding="utf-8") as file:
+            json.dump(existing_data, file, ensure_ascii=False, indent=4)
 
 
 
-# Fetches and merges trancripts and comments into a dictionary, video_id being 
-# keys. It calls both fetch_transcript() and pull_comments() without 
-# seperate calls for each
-def merge_transcript_comments(video_ids):
-    if isinstance(video_ids, list):
-        pass
-    elif isinstance(video_ids, str):
-        video_ids = [video_ids]
-    elif not isinstance(video_ids, (list, str)):
-        raise TypeError("video_ids should be list or string")
-    
-    
-    merged_dict = {}
-    for video_id in video_ids:
-        merged_dict[video_id] = {
-            # fetching videoTitle is insufficient, 
-            # bc the method can gather multiple ids at a time
-            "videoTitle": fetch_video_titles(video_id)[0],  # list of one title
-                "data": {
-                    "transcript": fetch_transcript(video_id)[video_id],
-                    "comments": pull_comments(video_id)[video_id]
-                }
-        }
-  
-    return merged_dict
+
 
 

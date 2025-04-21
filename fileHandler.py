@@ -1,8 +1,8 @@
 from googleapiclient.discovery import build
 from ytTranscriptApi import fetch_transcript
-import pandas as pd
 import json
 import os
+import dotenv
 
 # Class for handling video_ids in the permanent storage
 class VideoIdHandler:
@@ -83,6 +83,15 @@ class FileHandler:
         with open(save_path, "w", encoding="utf-8") as file:
             json.dump(existing_data, file, ensure_ascii=False, indent=4)
 
+    # Creates a .env file, if there isn't saves api_key to the file
+    def setup_env(user_input):
+        env_path = ".env"
+
+        # Opens file in write mode and writes api
+        with open(env_path, "w", encoding="utf-8") as file:
+            file.write(f"YT_API_KEY={user_input}\n")
+
+        print("Youtube API key saved to hard drive.")
 
 
 

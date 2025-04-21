@@ -47,6 +47,7 @@ class UserInput:
         transcript_comments = FileHandler.read_transcript_comments()
         return transcript_comments
     
-    def get_youtube_api_key():
-        return None
+    # Takes user input of api_key and writes it to .env (YT_API_KEY)
+    def get_youtube_api_key(user_api_key):
+        FileHandler.setup_env(user_api_key)
     

@@ -55,7 +55,7 @@ class FileHandler:
         with open(save_path, "w", encoding="utf-8") as file:
             json.dump(merged_dict, file, ensure_ascii=False, indent=4)
 
-    # Reads file transcript_comments and returns json object
+    # Reads file transcript_comments and returns dictionary
     def read_transcript_comments():
         base_dir = os.path.dirname(__file__)
         read_path = os.path.join(base_dir, "transcript_comments.json")
